@@ -21,7 +21,8 @@ mon_total, tues_total, wed_total, thurs_total, fri_total, sat_total, sun_total =
 base_url = "https://www.googleapis.com/youtube/v3/"
 video_url = base_url + "videos?part=snippet%2C+contentDetails%2C+statistics&id="
 rest_vid_url = "&fields=items(contentDetails(caption%2Cdefinition%2Cduration)%2Cetag%2Cid%2Ckind%2Csnippet(categoryId%2CchannelId%2CchannelTitle%2Ctags%2Ctitle)%2Cstatistics(dislikeCount%2CviewCount))%2Ckind&key="
-youtube_key = "AIzaSyBhfhYQkrMlAOPlCw_F4QNnT6SBRCmAvc8" #"AIzaSyAeurFNNLzBvFr3XRoGbGALTxq0wkT-w4Y"
+youtube_key = "AIzaSyBhfhYQkrMlAOPlCw_F4QNnT6SBRCmAvc8"
+youtube_key2 = "AIzaSyAeurFNNLzBvFr3XRoGbGALTxq0wkT-w4Y"
 
 class BlankDict(dict):
     def __missing__(self, key):
@@ -64,7 +65,7 @@ def read_file():
 
 def user_day(x, y, z):
     full_url = video_url + y + "&key=" + youtube_key
-    result = requests.get(full_url)
+    result = requests.get(full_url, verify=True)
     json_contents = json.loads(result.content, object_hook=BlankDict)
     for item in json_contents["items"]:
         if item["kind"]:
@@ -197,7 +198,6 @@ def json_file():
     #read_file()
     count_days()
 
-
     for i in range(len(user_dict)):
         sdc_data.append({
             user_dict[i][0]:{
@@ -213,8 +213,6 @@ def json_file():
         
     with open("UserAvgDays.txt", "w") as f:
         json.dump(sdc_data, f, sort_keys = True, indent = 4, ensure_ascii=True)
-
-
 
     sdc_data2 = []
     for i in range(len(AvgforDay)):
