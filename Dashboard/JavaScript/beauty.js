@@ -29,7 +29,18 @@ $(document).ready(function() {
                     map.set(key, value);
                   }
 
-               } //if
+               } else if (passedCategory == 'All') {
+                 var key = wordsCat[element][1][each].toLowerCase();
+
+                   if (map.has(key) != true) {
+                     //the tag doesnt exist in Map
+                     map.set(key, 1);
+                   } else {
+                     //tag exists in Map
+                     var value = map.get(key) + 1;
+                     map.set(key, value);
+                   }
+			   }//if
             } //for
         } //for
      } //for
