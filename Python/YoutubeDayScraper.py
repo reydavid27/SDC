@@ -82,49 +82,49 @@ def user_day(x, y, z):
             pass
 
 
-
+# x = key/User ID , y = date_together , z = weekday
 def count_total_days(x, y, z):
     global mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count
     global mon_total, tues_total, wed_total, thurs_total, fri_total, sat_total, sun_total
     user = x
 
-    if z == "Monday:":
+    if z == "Monday":
         mon_count += 1
         if user not in keep_track_of_users[0]:
             keep_track_of_users[0].append(user)
             Num_of_Vids_Watched[0] = Num_of_Vids_Watched[0] + 1
 
-    elif z == "Tuesday:":
+    elif z == "Tuesday":
         tues_count += 1
         if user not in keep_track_of_users[1]:
             keep_track_of_users[1].append(user)
             Num_of_Vids_Watched[1] = Num_of_Vids_Watched[1] + 1
 
-    elif z == "Wednesday:":
+    elif z == "Wednesday":
         wed_count += 1
         if user not in keep_track_of_users[2]:
             keep_track_of_users[2].append(user)
             Num_of_Vids_Watched[2] = Num_of_Vids_Watched[2] + 1
 
-    elif z == "Thursday:":
+    elif z == "Thursday":
         thurs_count += 1
         if user not in keep_track_of_users[3]:
             keep_track_of_users[3].append(user)
             Num_of_Vids_Watched[3] = Num_of_Vids_Watched[3] + 1
 
-    elif z == "Friday:":
+    elif z == "Friday":
         fri_count += 1
         if user not in keep_track_of_users[4]:
             keep_track_of_users[4].append(user)
             Num_of_Vids_Watched[4] = Num_of_Vids_Watched[4] + 1
 
-    elif z == "Saturday:":
+    elif z == "Saturday":
         sat_count += 1
         if user not in keep_track_of_users[5]:
             keep_track_of_users[5].append(user)
             Num_of_Vids_Watched[5] = Num_of_Vids_Watched[5] + 1
 
-    elif z == "Sunday:":
+    elif z == "Sunday":
         sun_count += 1
         if user not in keep_track_of_users[6]:
             keep_track_of_users[6].append(user)
@@ -150,18 +150,49 @@ def count_total_days(x, y, z):
         pass
 
 def calculate_avg():
-    AvgforDay[0] = (mon_count / (Num_of_Vids_Watched[0] * mon_total))
-    AvgforDay[1] = (tues_count / (Num_of_Vids_Watched[1] * tues_total))
-    AvgforDay[2] = (wed_count / (Num_of_Vids_Watched[2] * wed_total))
-    AvgforDay[3] = (thurs_count / (Num_of_Vids_Watched[3] * thurs_total))
-    AvgforDay[4] = (fri_count / (Num_of_Vids_Watched[4] * fri_total))
-    AvgforDay[5] = (sat_count / (Num_of_Vids_Watched[5] * sat_total))
-    AvgforDay[6] = (tues_count / (Num_of_Vids_Watched[6] * sun_total))
+    if Num_of_Vids_Watched[0] == 0 or mon_total == 0:
+        pass
+    else:
+        AvgforDay[0] = (mon_count / (Num_of_Vids_Watched[0] * mon_total))
+    if Num_of_Vids_Watched[1] == 0 or tues_total == 0:
+        pass
+    else:
+        AvgforDay[1] = (tues_count / (Num_of_Vids_Watched[1] * tues_total))
+    if Num_of_Vids_Watched[2] == 0 or wed_total == 0:
+        pass
+    else:
+        AvgforDay[2] = (wed_count / (Num_of_Vids_Watched[2] * wed_total))
+    if Num_of_Vids_Watched[3] == 0 or thurs_total == 0:
+        pass
+    else:
+        AvgforDay[3] = (thurs_count / (Num_of_Vids_Watched[3] * thurs_total))
+    if Num_of_Vids_Watched[4] == 0 or fri_total == 0:
+        pass
+    else:
+        AvgforDay[4] = (fri_count / (Num_of_Vids_Watched[4] * fri_total))
+    if Num_of_Vids_Watched[5] == 0 or sat_total == 0:
+        pass
+    else:
+        AvgforDay[5] = (sat_count / (Num_of_Vids_Watched[5] * sat_total))
+    if Num_of_Vids_Watched[6] == 0 or sun_total == 0:
+        pass
+    else:
+        AvgforDay[6] = (tues_count / (Num_of_Vids_Watched[6] * sun_total))
+        
+    '''    
+    print 'avg m: ', AvgforDay[0]
+    print 'avg t: ', AvgforDay[1]
+    print 'avg w: ', AvgforDay[2]
+    print 'avg th:', AvgforDay[3]
+    print 'avg f:', AvgforDay[4]
+    print 'avg s:', AvgforDay[5]
+    print 'avg sn:', AvgforDay[6]
+    '''
 
 def count_days():
     read_file()
     global mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count
-    mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count = 0, 0, 0, 0, 0, 0, 0
+    #mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count = 0, 0, 0, 0, 0, 0, 0
 
     for key, value in user_info.iteritems():
         for val in value:
@@ -180,13 +211,20 @@ def count_days():
             elif val == "Sunday":
                 sun_count += 1
 
-        mon_count = mon_count / mon_total
-        tues_count = tues_count / tues_total
-        wed_count = wed_count / wed_total
-        thurs_count = thurs_count / thurs_total
-        fri_count = fri_count / fri_total
-        sat_count = sat_count / sat_total
-        sun_count = sun_count / sun_total
+        if mon_total != 0:
+            mon_count = mon_count / mon_total
+        if tues_total != 0:
+            tues_count = tues_count / tues_total
+        if wed_total != 0:
+            wed_count = wed_count / wed_total
+        if thurs_total != 0:
+            thurs_count = thurs_count / thurs_total
+        if fri_total != 0:
+            fri_count = fri_count / fri_total
+        if sat_total != 0:
+            sat_count = sat_count / sat_total
+        if sun_total != 0:
+            sun_count = sun_count / sun_total
 
         user_dict.append((key, mon_count, tues_count,
                          wed_count, thurs_count,
