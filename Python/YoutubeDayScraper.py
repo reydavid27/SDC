@@ -3,7 +3,7 @@ import json
 import requests
 import datetime
 
-#These are the arrays and variables declared for us
+#These are the arrays and variables declared for use
 youtube_id = []
 already_stored = set()
 date = []
