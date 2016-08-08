@@ -39,6 +39,7 @@ def read_file():
             date_row = row['timestamp']
             yt_id = url_link[32:] #fixing the url string to grab the Youtube ID
             date_fix = date_row[:10] #fixing the date string to delete the time stamp
+            print date_fix
             if "youtube.com/watch" in url_link:
                 if len(yt_id) > 11:
                     pass
@@ -158,7 +159,7 @@ def count_total_days(x, y, z):
     else:
         pass
 '''
-This function calculates the average using the info from
+This function calculates the average, using the info from
 the Count_Total_days function
 '''
 def calculate_avg():
@@ -169,7 +170,9 @@ def calculate_avg():
     if numofVidsWatched[1] == 0 or tues_total == 0:
         pass
     else:
+        print "videos watched tues: ", numofVidsWatched[1]
         AvgforDay[1] = (tues_count / (numofVidsWatched[1] * tues_total))
+        print "avg for tues ", AvgforDay[1]
     if numofVidsWatched[2] == 0 or wed_total == 0:
         pass
     else:
@@ -191,7 +194,7 @@ def calculate_avg():
     else:
         AvgforDay[6] = (tues_count / (numofVidsWatched[6] * sun_total))
         
-    '''    
+    '''
     print 'avg m: ', AvgforDay[0]
     print 'avg t: ', AvgforDay[1]
     print 'avg w: ', AvgforDay[2]
@@ -207,7 +210,6 @@ It also calculates the average of this total.
 def count_days():
     read_file()
     global mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count
-    #mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count = 0, 0, 0, 0, 0, 0, 0
 
     for key, value in user_info.iteritems():
         for val in value:
@@ -268,15 +270,14 @@ def json_file():
         json.dump(sdc_data, f, sort_keys = True, indent = 4, ensure_ascii=True)
 
     sdc_data2 = []
-    for i in range(len(AvgforDay)):
-        sdc_data2.append({
-            "Monday": AvgforDay[0],
-            "Tuesday": AvgforDay[1],
-            "Wednesday": AvgforDay[2],
-            "Thursday": AvgforDay[3],
-            "Friday": AvgforDay[4],
-            "Saturday": AvgforDay[5],
-            "Sunday": AvgforDay[6]
+    sdc_data2.append({
+        "Monday": AvgforDay[0],
+        "Tuesday": AvgforDay[1],
+        "Wednesday": AvgforDay[2],
+        "Thursday": AvgforDay[3],
+        "Friday": AvgforDay[4],
+        "Saturday": AvgforDay[5],
+        "Sunday": AvgforDay[6]
         })
 
     with open("TotalAvgDays.txt", "w") as n:
