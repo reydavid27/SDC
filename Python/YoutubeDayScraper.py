@@ -39,7 +39,7 @@ def read_file():
             date_row = row['timestamp']
             yt_id = url_link[32:] #fixing the url string to grab the Youtube ID
             date_fix = date_row[:10] #fixing the date string to delete the time stamp
-            print date_fix
+            #print date_fix
             if "youtube.com/watch" in url_link:
                 if len(yt_id) > 11:
                     pass
@@ -76,9 +76,12 @@ def user_day(x, y, z):
     json_contents = json.loads(result.content, object_hook=BlankDict)
     for item in json_contents["items"]:
         if item["kind"]:
-            month = int(z[5:7])
-            day = int(z[8:])
-            year = int(z[:4])
+            #month = int(z[5:7])
+            #day = int(z[8:])
+            #year = int(z[:4])
+            month = int(z[:1])
+            day = int(z[2:4])
+            year = int(z[5:])
             date_together = (month, day, year)
             weekday = datetime.date(year, month, day).strftime("%A")
             key = x
@@ -170,9 +173,9 @@ def calculate_avg():
     if numofVidsWatched[1] == 0 or tues_total == 0:
         pass
     else:
-        print "videos watched tues: ", numofVidsWatched[1]
+        #print "videos watched tues: ", numofVidsWatched[1]
         AvgforDay[1] = (tues_count / (numofVidsWatched[1] * tues_total))
-        print "avg for tues ", AvgforDay[1]
+        #print "avg for tues ", AvgforDay[1]
     if numofVidsWatched[2] == 0 or wed_total == 0:
         pass
     else:
@@ -227,7 +230,19 @@ def count_days():
                 sat_count += 1
             elif val == "Sunday":
                 sun_count += 1
-
+                   
+        total_vids_count = mon_count + tues_count + wed_count + thurs_count + fri_count + sat_count + sun_count  
+        total_days = mon_total + tues_total + wed_total + thurs_total + fri_total + sat_total + sun_total
+        
+        final_avg_value = total_vids_count / total_days
+        print "User: ", key
+        print "total videos: ", total_vids_count
+        print "total days: ", total_days
+        print "final avg value: ", final_avg_value
+        
+        user_dict.append((key, final_avg_value))
+                
+        '''
         if mon_total != 0:
             mon_count = mon_count / mon_total
         if tues_total != 0:
@@ -246,13 +261,22 @@ def count_days():
         user_dict.append((key, mon_count, tues_count,
                          wed_count, thurs_count,
                          fri_count, sat_count, sun_count))
+        '''
         
         mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count = 0,0,0,0,0,0,0
 
 #Function to output the data into a json text file
 def json_file():
     count_days()
-
+    
+    for i in range(len(user_dict)):
+        sdc_data.append({
+            user_dict[i][0]: {
+                "AverageVids": user_dict[i][1]
+            }
+        })
+    
+    '''
     for i in range(len(user_dict)):
         sdc_data.append({
             user_dict[i][0]:{
@@ -266,6 +290,7 @@ def json_file():
                 }
             })
         
+    '''
     with open("UserAvgDays.txt", "w") as f:
         json.dump(sdc_data, f, sort_keys = True, indent = 4, ensure_ascii=True)
 
