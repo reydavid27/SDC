@@ -1,3 +1,9 @@
+'''
+This program loads a csv file, makes an API call to Youtube and
+calculates the average number of videos watched by a given user.
+Programmers: David Acuqui and Carol Chau
+'''
+
 import requests
 import json
 import csv
