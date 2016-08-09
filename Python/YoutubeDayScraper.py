@@ -2,6 +2,7 @@ import csv
 import json
 import requests
 import datetime
+import collections
 
 #These are the arrays and variables declared for use
 youtube_id = []
@@ -17,6 +18,10 @@ numofVidsWatched = [0, 0, 0, 0, 0, 0, 0]
 AvgforDay = [0,0,0,0,0,0,0]
 mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count = 0, 0, 0, 0, 0, 0, 0
 mon_total, tues_total, wed_total, thurs_total, fri_total, sat_total, sun_total = 0, 0, 0, 0, 0, 0, 0
+
+user_date_set = set()
+user_array = []
+user_cnt = collections.Counter()
 
 
 #These are used for the url building to make the API call
@@ -76,12 +81,12 @@ def user_day(x, y, z):
     json_contents = json.loads(result.content, object_hook=BlankDict)
     for item in json_contents["items"]:
         if item["kind"]:
-            #month = int(z[5:7])
-            #day = int(z[8:])
-            #year = int(z[:4])
-            month = int(z[:1])
-            day = int(z[2:4])
-            year = int(z[5:])
+            month = int(z[5:7])
+            day = int(z[8:])
+            year = int(z[:4])
+            #month = int(z[:1])
+            #day = int(z[2:4])
+            #year = int(z[5:])
             date_together = (month, day, year)
             weekday = datetime.date(year, month, day).strftime("%A")
             key = x
@@ -100,7 +105,13 @@ def count_total_days(x, y, z):
     global mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count
     global mon_total, tues_total, wed_total, thurs_total, fri_total, sat_total, sun_total
     user = x
-
+    
+    #added
+    setItem = (x, y)
+    if setItem not in user_date_set:
+        user_date_set.add(setItem) 
+        user_array.append(x)
+    
     if z == "Monday":
         mon_count += 1
         if user not in keepTrackofUsers[0]:
@@ -173,9 +184,7 @@ def calculate_avg():
     if numofVidsWatched[1] == 0 or tues_total == 0:
         pass
     else:
-        #print "videos watched tues: ", numofVidsWatched[1]
         AvgforDay[1] = (tues_count / (numofVidsWatched[1] * tues_total))
-        #print "avg for tues ", AvgforDay[1]
     if numofVidsWatched[2] == 0 or wed_total == 0:
         pass
     else:
@@ -213,6 +222,9 @@ It also calculates the average of this total.
 def count_days():
     read_file()
     global mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count
+    
+    tallyuser()
+    #print user_cnt
 
     for key, value in user_info.iteritems():
         for val in value:
@@ -230,19 +242,24 @@ def count_days():
                 sat_count += 1
             elif val == "Sunday":
                 sun_count += 1
-                   
+                
+       
+                
         total_vids_count = mon_count + tues_count + wed_count + thurs_count + fri_count + sat_count + sun_count  
-        total_days = mon_total + tues_total + wed_total + thurs_total + fri_total + sat_total + sun_total
+        total_days = tallydays(key)
         
         final_avg_value = total_vids_count / total_days
+        '''
         print "User: ", key
         print "total videos: ", total_vids_count
         print "total days: ", total_days
         print "final avg value: ", final_avg_value
+        '''
         
         user_dict.append((key, final_avg_value))
+        
                 
-        '''
+        '''        
         if mon_total != 0:
             mon_count = mon_count / mon_total
         if tues_total != 0:
@@ -265,19 +282,28 @@ def count_days():
         
         mon_count, tues_count, wed_count, thurs_count, fri_count, sat_count, sun_count = 0,0,0,0,0,0,0
 
+#Tallies the occurrences of users in user_array list
+def tallyuser():
+    for user in user_array:
+        user_cnt[user] += 1
+    #print user_cnt
+
+def tallydays(user_id):
+    return user_cnt[user_id]
+    
+    
+
 #Function to output the data into a json text file
 def json_file():
     count_days()
-    
+
     for i in range(len(user_dict)):
         sdc_data.append({
             user_dict[i][0]: {
                 "AverageVids": user_dict[i][1]
             }
         })
-    
-    '''
-    for i in range(len(user_dict)):
+        '''
         sdc_data.append({
             user_dict[i][0]:{
                 "Monday": user_dict[i][1],
@@ -289,8 +315,8 @@ def json_file():
                 "Sunday": user_dict[i][7]
                 }
             })
+        '''
         
-    '''
     with open("UserAvgDays.txt", "w") as f:
         json.dump(sdc_data, f, sort_keys = True, indent = 4, ensure_ascii=True)
 
