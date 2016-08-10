@@ -25,14 +25,16 @@ class BlankDict(dict):
 
 def read_file():
     already_stored = set()
-    with open("youtube_urls.csv") as csvfile:
+    with open("youtube_urls2.csv") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             url_link = row['url']
             youtube_id = url_link[32:].encode(encoding='UTF-8')  # fixing the url string to grab the Youtube ID
-            user_id = row['user_id']
+            user_id = row['user_clone_id']
             date = row['timestamp']
             date_fix = date[:10] #fixing the date string to delete the time stamp
+            print date_fix
+            print user_id
             if "youtube.com/watch" in url_link:
                 if len(youtube_id) > 11:
                     pass
