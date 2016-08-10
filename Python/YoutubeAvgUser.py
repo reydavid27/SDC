@@ -79,8 +79,8 @@ def count_total_days_user():
 def calculate_avg():
     count_total_days_user()
     for key, value in users_total_vids.iteritems() and users_total_days.iteritems():
-        var = users_total_vids[key]/users_total_days[key]
-        user_avg[key] = var #Pass the key and value to the dictionary
+        avg = users_total_vids[key]/users_total_days[key]
+        user_avg[key] = avg #Pass the key and value to the dictionary
 
 #Function to output the results into a json file
 def output_json():
