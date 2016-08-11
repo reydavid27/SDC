@@ -32,6 +32,10 @@ body {
     border: none;
 }
 
+.glyphicon-home {
+  color: white;
+}
+
 .content {
   position: relative;
   margin-top: 0px;
