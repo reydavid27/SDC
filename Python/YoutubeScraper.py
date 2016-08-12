@@ -1,3 +1,6 @@
+
+
+
 import csv
 import json
 import requests
@@ -25,7 +28,7 @@ class BlankDict(dict):
         return None
 
 def read_file():
-    with open("sampletest.csv") as csvfile:
+    with open("youtube_urls2.csv") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             url_link = row['url']

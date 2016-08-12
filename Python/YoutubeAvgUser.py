@@ -33,8 +33,6 @@ def read_file():
             user_id = row['user_clone_id']
             date = row['timestamp']
             date_fix = date[:10] #fixing the date string to delete the time stamp
-            print date_fix
-            print user_id
             if "youtube.com/watch" in url_link:
                 if len(youtube_id) > 11:
                     pass
