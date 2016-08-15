@@ -1,4 +1,8 @@
-
+'''
+A program created for Social Data Collective to read a CSV file
+and make API calls to YouTube.
+Programmers: David Acuqui and Carol Chau
+'''
 
 
 import csv
@@ -30,18 +34,23 @@ class BlankDict(dict):
 def read_file():
     with open("youtube_urls2.csv") as csvfile:
         reader = csv.DictReader(csvfile)
+        i = 1
         for row in reader:
-            url_link = row['url']
-            user_row = row['user_id']
-            yt_id = url_link[32:] #only grab the ID from the url link
-            if "youtube.com/watch" in url_link:
-                if len(yt_id) > 11:
-                    pass
-                else:
-                    if yt_id not in already_stored:
-                        already_stored.add(yt_id)
-                        youtube_id.append(yt_id.encode(encoding='UTF-8'))
-                        user_id.append(user_row)
+            if i == 50:
+                break
+            else:
+                i += 1
+                url_link = row['url']
+                user_row = row['user_id']
+                yt_id = url_link[32:] #only grab the ID from the url link
+                if "youtube.com/watch" in url_link:
+                    if len(yt_id) > 11:
+                        pass
+                    else:
+                        if yt_id not in already_stored:
+                            already_stored.add(yt_id)
+                            youtube_id.append(yt_id.encode(encoding='UTF-8'))
+                            user_id.append(user_row)
 
 def get_category(x):
     full_url = category_url + x + "&fields=items(snippet)&key=" + youtube_key
@@ -50,7 +59,7 @@ def get_category(x):
     for item in json_contents["items"]:
         var = item["snippet"]["title"]
         return var
-
+#Grabs the Subcriber count number from the Youtube channel
 def get_sub_count(x):
     full_url = channel_url + x + "&key=" + youtube_key
     result = requests.get(full_url)
@@ -68,12 +77,15 @@ def youtube_data():
         json_contents = json.loads(result.content, object_hook=BlankDict)
         for item in json_contents["items"]:
             if item["kind"]:
+                print "Json: "
+                print json_contents
                 data[ids] = []
                 new_user_ids.append(ids)
-                youtube_id.remove(ids)
                 category = get_category(item["snippet"]["categoryId"])
                 sub_count = get_sub_count(item["snippet"]["channelId"])
-                datum = [item["snippet"]["title"],
+                print  " "
+                print "length ", isodate.parse_duration(item["contentDetails"]["duration"])
+                video_data = [item["snippet"]["title"],
                          item["snippet"]["channelTitle"],
                          item["snippet"]["channelId"],
                          isodate.parse_duration(item["contentDetails"]["duration"]),
@@ -81,7 +93,10 @@ def youtube_data():
                          item["snippet"]["tags"],
                          category,
                          sub_count]
-                data[ids].append(datum)
+                print "video_data info: "
+                print video_data
+                print " "
+                data[ids].append(video_data)
             else:
                 pass
 
@@ -89,6 +104,8 @@ def json_file():
     youtube_data()
 
     for i in range(len(new_user_ids)):
+        print "new user ids", data[str(new_user_ids[i])]
+        print "vid length :", new_user_ids[i][0][3]
         sdc_data.append({
             new_user_ids[i]: {
                 "Title": data[new_user_ids[i]][0][0],
