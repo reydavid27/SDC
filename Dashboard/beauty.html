@@ -1,6 +1,8 @@
 <html>
 <head>
   <link rel="stylesheet" href="CSS/style.css" type="text/css">
+  <!-- Museo-700 Font -->
+  <link rel="stylesheet" type="text/css" href="CSS/museo700.css">
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <!-- Local Data Objects -->
@@ -12,52 +14,58 @@
 </head>
 <body>
   <!-- Top Navigation Bar -->
-  <nav class="navbar navbar-inverse" id="topNav">
+  <nav class="navbar navbar-inverse topNav">
   <div class="container-fluid">
     <div class="navbar-header">
 
-      <button type="button" id="toggleButton" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse">
-      <span class="sr-only"> Toggle Navigation </span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
+      <!-- Hamburger Toggle -->
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
 
-
+      <!-- Home Toggle -->
       <button type="button" id="htoggleButton" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#h-collapse">
       <span class="sr-only"> Toggle Navigation </span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
+      <span class="glyphicon glyphicon-home"></span>
       </button>
+
     </div>
     <div class="collapse navbar-collapse" id="h-collapse">
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-      <li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span>Log In/Sign Up</a></li>
-    </ul>
-  </div>
-  </div>
-</nav>
-
-<!-- Side Navigation Bar -->
-<nav  class="navbar navbar-inverse flex-container" id="sideNav">
-  <div class="container-fluid">
-    <div class="navbar-header">
-
+      <!-- Logo -->
+      <a class="navbar-brand" href="index.html">
+    	   <img src="img/logo.png" class="logo" alt="Open Up">
+      </a>
+      <!-- Top Navigation List -->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span>Log In/Sign Up</a></li>
+      </ul>
     </div>
-    <div class="collapse navbar-collapse" id = "collapse">
-    <ul class="nav nav-stacked nav-pills">
-      <li><a href="index.html">YouTube Breakdown</a></li>
-      <li><a href="beauty.html">Beauty</a></li>
-      <li><a href="jewelry.html">Jewelry</a></li>
-      <!--<li><a href="#">Log In/Sign Up</a></li> -->
+  </div> <!-- end container-fluid -->
+  </nav>
+
+  <div class="row row-offcanvas row-offcanvas-left">
+
+  <!-- Side Navigation Bar -->
+  <div class="sidenav-offcanvas" id="sideNav" role="navigation">
+    <ul class="nav">
+      <li>
+         <a href="#" data-toggle="collapse" data-target="#subset1">YouTube <br> Breakdown</a>
+         <ul class="nav collapse" id="subset1">
+           <li><a href="index.html">All</a></li>
+           <li><a href="beauty.html">Beauty</a></li>
+           <li><a href="jewelry.html">Jewelry</a></li>
+         </ul>
+      </li>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">Facebook</a></li>
+      <li><a href="#">Other</a></li>
     </ul>
   </div>
-  </div>
-</nav>
 
 <!-- Page Content -->
 <div class = "content">
@@ -74,7 +82,6 @@
   <tabl2>
     <tr>
       <td>  <div id="pie_div" class="pieChart" style="width: 1150px; height: 450px;"></div> </td>
-      <!-- <td>  <div id="histo_div" class="histoChart"></div>25/td> -->
     </tr>
   </table>
 
@@ -83,9 +90,8 @@
     <h3> Tag Words</h3>
     <select id="cloudSelect">
       <option label=""></option>
-	  <option>All</option>
     </select>
-    <div id="tagwords">
+    <div id="tagwords" class="tagOptions">
     </div>
   </div>
 
@@ -93,12 +99,13 @@
   <div class="tableClass">
   <div id="dashboard_div">
     <div id="control_div"></div>
-    <div id="table_div"></div>
+    <div id="table_div" class="tableChart"></div>
   </div>
   <a id="exportTable" href="#">Download as csv</a>
   </div>
 
-</div>
+</div> <!-- end div class="content" -->
+</div> <!-- end div class="row row-offcanvas row-offcanvas-left"-->
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

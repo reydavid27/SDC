@@ -110,10 +110,8 @@ $(document).ready(function() {
   var csvTableData; //Gets table data and stores it for export
 
   //Options for Data Table
-
-  var tableOptions = {  showRowNumber: true,
-                        width: '95%',
-                        height: '400px'
+  var tableOptions = {
+                        showRowNumber: true,
                       };
 
    //Options for Pie Chart
@@ -127,17 +125,19 @@ $(document).ready(function() {
                         height:'95%'
                       },
                       backgroundColor: {
-                        stroke: '#4322c0',
-                        strokeWidth: 3
+                        stroke: '#00178a',
+                        strokeWidth: 3,
                       },
-                      //backgroundColor: { fill:'transparent' }
+                      colors: ['#e11383', '#ffa400', '#45c1e1', '#eb0029', '#95d600', '#978882',
+                               '#3366CC','#DC3912','#109618', '#990099','#3B3EAC','#0099C6',
+                               '#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11']
                     };
+
 
    //Options for Bar Graph
    var columnOptions = {
-                          title: 'Amount Videos Watched per Day of Week',
-                          width: 1150,
-                          height: 400,
+                          title: 'Average Videos Watched per Day of Week',
+                          colors: ['#ffa400'],
                           legend: 'none',
                           bar: { groupWidth: '60%'},
                           chartArea: {
@@ -145,12 +145,12 @@ $(document).ready(function() {
                             'height': '80%'
                           },
                           backgroundColor: {
-                            stroke: '#4322c0',
-                            strokeWidth: 3
+                            stroke: '#00178a',
+                            strokeWidth: 3,
                           },
                           vAxis: {
                             gridlines: { count: 5 },
-                            title: 'Amount Videos Watched'
+                            title: 'Average Videos Watched'
                           },
                           hAxis: {
                             title: 'Day of Week'
@@ -160,13 +160,11 @@ $(document).ready(function() {
    //Options for Histogram
    var histoOptions = {
                         title: 'Average Videos Watched',
-                        width: 577,
-                        height: 400,
                         backgroundColor: {
-                          stroke: '#4322c0',
-                          strokeWidth: 3
+                          stroke: '#00178a',
+                          strokeWidth: 3,
                         },
-                        colors: [ '#1A8763', '#871B47', '#999999'],
+                        colors: [ '#978882', '#1A8763', '#871B47', '#999999'],
                         vAxis: {
                           title: 'Amount of Users',
                         },
@@ -249,10 +247,8 @@ $(document).ready(function() {
 
    //Options for Word Cloud
    var cloudOptions = {
-     width: 1150,
-     height: 500,
      shape: 'rectangular',
-     autoResize: true
+     autoResize: true,
    }
 
    //add categories to drop down
@@ -294,5 +290,9 @@ $(document).ready(function() {
       this.target = '_blank';
   });
 
+  //Side Navigation Toggle
+  $('[data-toggle=offcanvas]').click(function() {
+    $('.row-offcanvas').toggleClass('active');
+  });
 
 });

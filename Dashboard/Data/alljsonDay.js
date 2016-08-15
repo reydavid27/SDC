@@ -3,12 +3,12 @@ Amount of videos watched per DoW */
 
 var jsonDAY = [
     {
-        "Friday": 2265, 
-        "Monday": 2666, 
-        "Saturday": 2446, 
-        "Sunday": 2753, 
-        "Thursday": 2397, 
-        "Tuesday": 2598, 
-        "Wednesday": 2441
+        "Friday": 2, 
+        "Monday": 1, 
+        "Saturday": 2, 
+        "Sunday": 2, 
+        "Thursday": 1, 
+        "Tuesday": 1, 
+        "Wednesday": 1
     }
 ];

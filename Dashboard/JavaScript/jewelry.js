@@ -41,7 +41,7 @@ $(document).ready(function() {
                      var value = map.get(key) + 1;
                      map.set(key, value);
                    }
-                   
+
                }//if
             } //for
         } //for
@@ -140,26 +140,28 @@ $(document).ready(function() {
   google.charts.setOnLoadCallback(drawTable);
   google.charts.setOnLoadCallback(drawPie);
 
-  //Options for data table
-  var tableOptions = {  showRowNumber: true,
-                        width: '94%',
-                        height: '400px'
-                     };
+  //Options for Data Table
+  var tableOptions = {
+                        showRowNumber: true,
+                      };
 
-  //Options for pie chart
-  var pieOptions = {
+   //Options for Pie Chart
+   var pieOptions = { //legend: {position: ''},
                       pieSliceText: 'label',
                       title: 'Video Categories',
                       pieStartAngle: 100,
                       chartArea:{
-                        top: 30,
+                        top: 20,
                         width:'90%',
                         height:'90%'
                       },
                       backgroundColor: {
-                        stroke: '#4322c0',
-                        strokeWidth: 3
+                        stroke: '#00178a',
+                        strokeWidth: 3,
                       },
+                      colors: ['#e11383', '#ffa400', '#45c1e1', '#eb0029', '#95d600', '#978882',
+                               '#3366CC','#DC3912','#109618', '#990099','#3B3EAC','#0099C6',
+                               '#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11']
                     };
 
 var csvTableData;
@@ -213,13 +215,10 @@ var csvTableData;
    * Word Cloud
    */
 
-  var cloudOptions = {
-    width: 1150,
-    height: 500,
-    shape: 'rectangular',
-    autoResize: true
-  }
-
+   var cloudOptions = {
+     shape: 'rectangular',
+     autoResize: true,
+   }
    //add categories to word cloud drop down list
    for (var k=0; k < pieCategory.length; k++) {
      $('#cloudSelect').append($('<option>', {
@@ -257,6 +256,11 @@ var csvTableData;
       this.href = encodedUri;
       this.download = 'table-data.csv';
       this.target = '_blank';
+  });
+
+  //Side Navigation Toggle
+  $('[data-toggle=offcanvas]').click(function() {
+    $('.row-offcanvas').toggleClass('active');
   });
 
 });
