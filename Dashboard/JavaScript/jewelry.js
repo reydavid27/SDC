@@ -215,10 +215,14 @@ var csvTableData;
    * Word Cloud
    */
 
+   //Options for Word Cloud
    var cloudOptions = {
+     width: 1180,
+     height: 400,
      shape: 'rectangular',
      autoResize: true,
    }
+   
    //add categories to word cloud drop down list
    for (var k=0; k < pieCategory.length; k++) {
      $('#cloudSelect').append($('<option>', {

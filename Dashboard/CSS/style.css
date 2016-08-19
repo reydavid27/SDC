@@ -137,14 +137,14 @@ p {
 /* Word Cloud */
 #tagWords {
   margin-top: 3px;
-  background-color: #222;
+  background-color: white;
   border:2px solid var(--darkblue);
   height: 300px;
 }
 
 .tagOptions {
-  width: 93%;
-  height: 500px;
+  width: 1180px;
+  height: 200px;
 }
 
 /* Data Table */

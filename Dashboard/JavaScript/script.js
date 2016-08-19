@@ -247,6 +247,8 @@ $(document).ready(function() {
 
    //Options for Word Cloud
    var cloudOptions = {
+     width: 1180,
+     height: 400,
      shape: 'rectangular',
      autoResize: true,
    }
