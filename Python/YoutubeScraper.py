@@ -50,7 +50,7 @@ def read_file():
 
 def get_category(x):
     full_url = category_url + x + "&fields=items(snippet)&key=" + youtube_key
-    result = requests.get(full_url)
+    result = requests.get(full_url, verify=True)
     json_contents = json.loads(result.content)
     for item in json_contents["items"]:
         var = item["snippet"]["title"]
@@ -59,7 +59,7 @@ def get_category(x):
 #Grabs the Subcriber count number from the Youtube channel
 def get_sub_count(x):
     full_url = channel_url + x + "&key=" + youtube_key
-    result = requests.get(full_url)
+    result = requests.get(full_url, verify=True)
     json_contents = json.loads(result.content, object_hook=BlankDict)
     for item in json_contents["items"]:
         var = item["statistics"]["subscriberCount"]
@@ -70,7 +70,7 @@ def youtube_data():
 
     for ids in youtube_id:
         full_url = video_url + ids + rest_vid_url + youtube_key
-        result = requests.get(full_url)
+        result = requests.get(full_url, verify=True)
         json_contents = json.loads(result.content, object_hook=BlankDict)
         for item in json_contents["items"]:
             if item["kind"]:
@@ -79,13 +79,13 @@ def youtube_data():
                 category = get_category(item["snippet"]["categoryId"])
                 sub_count = get_sub_count(item["snippet"]["channelId"])
                 video_data = [item["snippet"]["title"],
-                         item["snippet"]["channelTitle"],
-                         item["snippet"]["channelId"],
-                         isodate.parse_duration(item["contentDetails"]["duration"]),
-                         item["statistics"]["viewCount"],
-                         item["snippet"]["tags"],
-                         category,
-                         sub_count]
+                              item["snippet"]["channelTitle"],
+                              item["snippet"]["channelId"],
+                              isodate.parse_duration(item["contentDetails"]["duration"]),
+                              item["statistics"]["viewCount"],
+                              item["snippet"]["tags"],
+                              category,
+                              sub_count]
                 data[ids].append(video_data)
             else:
                 pass
